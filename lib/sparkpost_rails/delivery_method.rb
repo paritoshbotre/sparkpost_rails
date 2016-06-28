@@ -67,14 +67,14 @@ module SparkPostRails
 
     def prepare_addresses emails, names
       emails = [emails] unless emails.is_a?(Array)
-      emails.each_with_index.map {|email, index| prepare_address(email, index, names) }
+      emails.each_with_index.map {|email, index| prepare_address(email, index, names, emails) }
     end
 
-    def prepare_address email, index, names
+    def prepare_address email, index, names, emails
       if !names[index].nil?
         { address:  { email: email, name: names[index] } }
       else
-        { address: { email: email } }
+        { address: { email: email, header_to: emails.join(', ') } }
       end
     end
 
